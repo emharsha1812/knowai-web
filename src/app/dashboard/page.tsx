@@ -9,6 +9,7 @@ import {
   Highlight,
   useTheme,
 } from "@/components/ui/primitives";
+import { getMe, updateMe, isLoggedIn, type UserProfile } from "@/lib/auth";
 
 export default function Dashboard() {
   const theme = useTheme();
@@ -19,6 +20,13 @@ export default function Dashboard() {
     subtitle: string;
     url: string;
   } | null>(null);
+
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [bio, setBio] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState("");
 
   useEffect(() => {
     try {
@@ -37,6 +45,32 @@ export default function Dashboard() {
       // ignore
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn()) return;
+    getMe().then((u) => {
+      setUser(u);
+      setUsername(u.username);
+      setDisplayName(u.display_name ?? "");
+      setBio(u.bio ?? "");
+    }).catch(() => {});
+  }, []);
+
+  async function handleSaveProfile(e: React.FormEvent) {
+    e.preventDefault();
+    setSaving(true);
+    setSaveMsg("");
+    try {
+      const updated = await updateMe({ username, display_name: displayName || undefined, bio: bio || undefined });
+      setUser(updated);
+      setSaveMsg("Saved!");
+    } catch (err) {
+      setSaveMsg(err instanceof Error ? err.message : "Save failed");
+    } finally {
+      setSaving(false);
+      setTimeout(() => setSaveMsg(""), 3000);
+    }
+  }
 
   return (
     <div
@@ -88,7 +122,7 @@ export default function Dashboard() {
                   letterSpacing: "-0.02em",
                 }}
               >
-                Welcome back, <em>Sai.</em>
+                Welcome back, <em>{user?.display_name || user?.username || "there"}.</em>
               </h1>
               <div
                 style={{
@@ -131,7 +165,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div style={{ padding: "0 80px 80px", maxWidth: 800 }}>
+        <div style={{ padding: "0 80px 80px", maxWidth: 800, display: "flex", flexDirection: "column", gap: 28 }}>
           {/* CONTINUE READING — large card */}
           {lastReadBlog && (
             <div
@@ -212,6 +246,82 @@ export default function Dashboard() {
                   RESUME ↗
                 </Link>
               </div>
+            </div>
+          )}
+
+          {/* PROFILE SETTINGS */}
+          {user && (
+            <div style={{ background: t.paperAlt, border: `1px solid ${t.rule}`, borderRadius: 6, padding: 28 }}>
+              <Mono theme={theme}>§ ACCOUNT SETTINGS</Mono>
+              <form onSubmit={handleSaveProfile} style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 14 }}>
+                <div>
+                  <label style={{ fontSize: 11, fontFamily: "JetBrains Mono, monospace", color: t.inkMuted, display: "block", marginBottom: 6 }}>USERNAME</label>
+                  <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    minLength={3}
+                    pattern="^[a-zA-Z0-9_-]+$"
+                    title="Letters, numbers, underscores, hyphens only"
+                    required
+                    style={{
+                      width: "100%", boxSizing: "border-box",
+                      background: t.paper, border: `1px solid ${t.rule}`,
+                      color: t.ink, padding: "10px 12px", fontSize: 14,
+                      fontFamily: "JetBrains Mono, monospace", outline: "none",
+                      borderRadius: 3,
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: 11, fontFamily: "JetBrains Mono, monospace", color: t.inkMuted, display: "block", marginBottom: 6 }}>DISPLAY NAME</label>
+                  <input
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="How your name appears"
+                    style={{
+                      width: "100%", boxSizing: "border-box",
+                      background: t.paper, border: `1px solid ${t.rule}`,
+                      color: t.ink, padding: "10px 12px", fontSize: 14,
+                      outline: "none", borderRadius: 3,
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: 11, fontFamily: "JetBrains Mono, monospace", color: t.inkMuted, display: "block", marginBottom: 6 }}>BIO</label>
+                  <textarea
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    placeholder="A short bio"
+                    rows={3}
+                    style={{
+                      width: "100%", boxSizing: "border-box",
+                      background: t.paper, border: `1px solid ${t.rule}`,
+                      color: t.ink, padding: "10px 12px", fontSize: 14,
+                      outline: "none", borderRadius: 3, resize: "vertical",
+                      fontFamily: "inherit",
+                    }}
+                  />
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                  <button
+                    type="submit"
+                    disabled={saving}
+                    style={{
+                      background: t.ink, color: t.paper, border: "none",
+                      padding: "10px 20px", borderRadius: 3, cursor: saving ? "not-allowed" : "pointer",
+                      fontFamily: "JetBrains Mono, monospace", fontSize: 11,
+                      fontWeight: 600, letterSpacing: "0.1em", opacity: saving ? 0.6 : 1,
+                    }}
+                  >
+                    {saving ? "SAVING..." : "SAVE CHANGES"}
+                  </button>
+                  {saveMsg && (
+                    <span style={{ fontSize: 12, color: saveMsg === "Saved!" ? "#7aa86b" : "#e05555", fontFamily: "JetBrains Mono, monospace" }}>
+                      {saveMsg}
+                    </span>
+                  )}
+                </div>
+              </form>
             </div>
           )}
         </div>

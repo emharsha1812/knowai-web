@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { NavAuth } from "@/components/nav-auth";
 import { Shield } from "lucide-react";
 
 const ACTIVE_LINKS = [
@@ -134,19 +135,7 @@ export function Navbar() {
             HF
           </Link>
 
-          <Link
-            href="/sign-in"
-            className="hidden sm:block text-base text-muted-foreground hover:text-foreground transition-colors px-3"
-          >
-            Sign In
-          </Link>
-
-          <Link
-            href="/sign-in"
-            className="border border-foreground/80 bg-foreground text-background hover:bg-foreground/90 transition-colors text-sm uppercase tracking-wider px-6 py-2.5 font-medium rounded-md"
-          >
-            Early Access
-          </Link>
+          <NavAuth />
         </div>
       </div>
     </header>
