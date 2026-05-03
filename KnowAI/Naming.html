@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Naming · Round 02</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500&family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ece8de; font-family: 'Inter', system-ui, sans-serif; color: #0e0e10; }
+  .page { padding: 56px 64px 96px; max-width: 1380px; margin: 0 auto; }
+  .header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 28px; gap: 32px; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #86857f; letter-spacing: 0.06em; text-transform: uppercase; }
+  h1 { font-family: 'Newsreader', serif; font-weight: 400; font-size: 52px; margin: 6px 0 0; letter-spacing: -0.025em; line-height: 1.0; }
+  h1 em { font-style: italic; }
+  .sub { font-family: 'Newsreader', serif; font-style: italic; color: #3a3a3e; font-size: 16px; margin-top: 10px; max-width: 780px; line-height: 1.55; font-weight: 300; }
+  .accent-rule { width: 72px; height: 4px; background: #f4c542; border-radius: 2px; margin: 14px 0 0; }
+
+  .strategy { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 18px 22px; background: #faf8f3; border: 1px solid #d9d4c5; border-radius: 4px; margin: 24px 0 8px; }
+  .strategy .col { font-size: 12.5px; color: #3a3a3e; line-height: 1.5; }
+  .strategy .col b { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 10.5px; display: block; color: #876613; margin-bottom: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+  .card { background: #faf8f3; border: 1px solid #d9d4c5; border-radius: 4px; padding: 30px; position: relative; display: flex; flex-direction: column; min-height: 480px; }
+  .card.dark { background: #14141a; border-color: #2a2a32; color: #f1efe7; }
+  .card.dark .desc, .card.dark .meta, .card.dark .meaning { color: #c4c1b6; }
+  .card.dark .meaning b { color: #f1efe7; }
+  .card.dark .pos { color: #d4d1c5; }
+
+  .label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; gap: 12px; }
+  .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #86857f; letter-spacing: 0.08em; }
+  .pill { background: rgba(244,197,66,0.22); padding: 3px 10px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #876613; letter-spacing: 0.05em; white-space: nowrap; }
+  .card.dark .pill { background: rgba(244,197,66,0.15); color: #f4c542; }
+  .name { font-family: 'Newsreader', serif; font-weight: 500; font-size: 34px; letter-spacing: -0.02em; line-height: 1.0; margin-top: 6px; }
+  .name em { font-style: italic; font-weight: 400; }
+  .pron { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #86857f; margin-left: 10px; letter-spacing: 0.04em; }
+  .card.dark .pron { color: #6f6f78; }
+
+  .meaning { font-family: 'Newsreader', serif; font-size: 14.5px; line-height: 1.55; color: #3a3a3e; margin-top: 8px; }
+  .meaning b { font-weight: 600; color: #0e0e10; }
+
+  .pos { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 16.5px; color: #54534b; margin-top: 14px; padding-left: 14px; border-left: 3px solid #f4c542; line-height: 1.45; }
+  .card.dark .pos { color: #d4d1c5; }
+
+  .stage { flex: 1; margin-top: 22px; padding: 24px 0 16px; display: flex; align-items: center; justify-content: center; border-top: 1px dashed #e8e3d4; }
+  .card.dark .stage { border-top-color: #2a2a32; }
+
+  .meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding-top: 14px; border-top: 1px dashed #e8e3d4; margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #86857f; letter-spacing: 0.04em; line-height: 1.5; }
+  .card.dark .meta { border-top-color: #2a2a32; color: #a8a59a; }
+  .meta b { color: #0e0e10; font-weight: 600; display: block; font-size: 10px; }
+  .card.dark .meta b { color: #f1efe7; }
+
+  .next { margin-top: 44px; padding: 24px 28px; background: #faf8f3; border: 1px solid #d9d4c5; border-left: 4px solid #f4c542; border-radius: 4px; display: flex; justify-content: space-between; gap: 24px; align-items: center; }
+  .next .scribble { font-family: 'Caveat', cursive; font-size: 18px; color: #54534b; max-width: 320px; text-align: right; line-height: 1.3; }
+  .next h3 { font-family: 'Newsreader', serif; font-size: 24px; font-weight: 500; margin: 4px 0 6px; letter-spacing: -0.01em; }
+  .next p { font-size: 13px; color: #3a3a3e; margin: 0; line-height: 1.5; }
+
+  .disclaimer { margin-top: 18px; padding: 14px 18px; background: rgba(244,197,66,0.12); border-left: 3px solid #f4c542; border-radius: 3px; font-size: 12.5px; color: #54534b; line-height: 1.55; }
+  .disclaimer b { color: #0e0e10; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div>
+    <div class="mono">§ NAMING · ROUND 02 · invented + uncommon</div>
+    <h1>Names that <em>aren't</em> taken.</h1>
+    <div class="accent-rule"></div>
+    <div class="sub">Common dictionary words — Marginalia, Atelier, Codex, Primer — are mostly gone. This round leans on three strategies that produce defensible names: <b>coined words</b> (no existing meaning to fight), <b>uncommon compounds</b> (two short words that don't already collide), and <b>specific Greek/Latin roots</b> (ownable in the ML category).</div>
+  </div>
+  <div style="text-align:right;">
+    <div class="mono">FILE · naming-round-02</div>
+    <div class="mono" style="margin-top: 6px;">8 CONCEPTS</div>
+  </div>
+</div>
+
+<div class="strategy">
+  <div class="col"><b>Coined</b>Made-up words. Zero baggage but need a story.</div>
+  <div class="col"><b>Compound</b>Two short words. Vivid, easy to remember.</div>
+  <div class="col"><b>Greek/Latin</b>Real roots, no English collision yet.</div>
+  <div class="col"><b>Avoid</b>"AI" suffix. "-ly" SaaS endings. Anything Codex / Primer / Lyceum-adjacent.</div>
+</div>
+
+<div class="disclaimer">
+  <b>On availability:</b> I've biased toward names that look clear, but you must verify before committing — domain registrar, USPTO trademark search (and your jurisdiction equivalents), and a quick GitHub/social handle check. Treat these as design candidates, not legal clearance.
+</div>
+
+<div class="grid">
+
+  <!-- 01 — KERNFOLIO -->
+  <div class="card">
+    <div class="label">
+      <span class="num">01 · COMPOUND</span>
+      <span class="pill">workshop · editorial</span>
+    </div>
+    <div class="name">Kernfolio<span class="pron">/KURN·foh·lee·oh/</span></div>
+    <div class="meaning"><b>kern</b> (the kernel — the small hard core inside something) + <b>folio</b> (a leaf of a book). The hard part of the paper, on the page.</div>
+    <div class="pos">"A working library of ML, one folio per kernel."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <!-- folio mark: a folded page -->
+        <g transform="translate(40, 28)">
+          <path d="M 0 0 L 32 0 L 44 12 L 44 64 L 0 64 Z" fill="none" stroke="#0e0e10" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M 32 0 L 32 12 L 44 12" fill="none" stroke="#0e0e10" stroke-width="2.4" stroke-linejoin="round"/>
+          <line x1="8" y1="30" x2="36" y2="30" stroke="#0e0e10" stroke-width="1.4"/>
+          <line x1="8" y1="40" x2="36" y2="40" stroke="#0e0e10" stroke-width="1.4"/>
+          <line x1="8" y1="50" x2="24" y2="50" stroke="#f4c542" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <text x="106" y="78" font-family="Newsreader, serif" font-size="44" font-weight="500" fill="#0e0e10" letter-spacing="-1">Kern<tspan font-style="italic" font-weight="400">folio</tspan></text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>kernfolio.com<br>kernfolio.dev</div>
+      <div><b>TONE</b>quietly nerdy — typographic & ML wink</div>
+      <div><b>RISK</b>two-word coinage, takes a beat to read first time</div>
+    </div>
+  </div>
+
+  <!-- 02 — RECTOLINE -->
+  <div class="card dark">
+    <div class="label">
+      <span class="num">02 · COMPOUND</span>
+      <span class="pill">editorial · code</span>
+    </div>
+    <div class="name">Rectoline<span class="pron">/REK·toh·line/</span></div>
+    <div class="meaning"><b>recto</b> (the right-hand page — what you read first) + <b>line</b> (of code, of text). The first line on the page.</div>
+    <div class="pos">"Every chapter begins on the recto."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <text x="190" y="78" font-family="Newsreader, serif" font-size="46" font-weight="500" fill="#f1efe7" letter-spacing="-1.2" text-anchor="middle">Recto<tspan font-style="italic" font-weight="400">line</tspan></text>
+        <!-- yellow line under recto -->
+        <line x1="105" y1="86" x2="208" y2="86" stroke="#f4c542" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>rectoline.com<br>rectoline.dev</div>
+      <div><b>TONE</b>bookish, calm, slightly old-world</div>
+      <div><b>RISK</b>"recto" is unfamiliar to non-bookish folks — needs a tagline</div>
+    </div>
+  </div>
+
+  <!-- 03 — NOEMA -->
+  <div class="card">
+    <div class="label">
+      <span class="num">03 · GREEK ROOT</span>
+      <span class="pill">cognitive · scholarly</span>
+    </div>
+    <div class="name"><em>Nóema</em><span class="pron">/NOH·ə·mə/</span></div>
+    <div class="meaning"><b>n.</b> (Greek, νόημα) the <em>thought</em> — what is thought, as distinct from the act of thinking. Used in phenomenology for the content of a mental act.</div>
+    <div class="pos">"The thing you're trying to know, on the page."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <!-- bracketed letterform mark -->
+        <g transform="translate(38, 30)">
+          <path d="M 14 0 L 0 0 L 0 60 L 14 60" stroke="#0e0e10" stroke-width="2.4" fill="none" stroke-linejoin="miter"/>
+          <text x="20" y="44" font-family="Newsreader, serif" font-size="44" font-weight="500" fill="#0e0e10" font-style="italic">n</text>
+          <circle cx="42" cy="14" r="3.5" fill="#f4c542" stroke="#0e0e10" stroke-width="1.2"/>
+        </g>
+        <text x="100" y="80" font-family="Newsreader, serif" font-style="italic" font-size="50" font-weight="400" fill="#0e0e10" letter-spacing="-1.2">Nóema</text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>noema.school<br>noema.ml</div>
+      <div><b>TONE</b>intellectual, considered, European</div>
+      <div><b>RISK</b><em>Noema Magazine</em> exists (different category) — coexistence likely fine</div>
+    </div>
+  </div>
+
+  <!-- 04 — SCHOLIA -->
+  <div class="card">
+    <div class="label">
+      <span class="num">04 · LATIN ROOT</span>
+      <span class="pill">marginal · annotation</span>
+    </div>
+    <div class="name">Scholia<span class="pron">/SKOH·lee·ə/</span></div>
+    <div class="meaning"><b>n. pl.</b> (Greek/Latin) ancient marginal notes by scholars on classical texts — explanatory glosses, alternate readings, arguments with the author. Plural of <em>scholion</em>.</div>
+    <div class="pos">"Read the canon. Then write the scholia."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <!-- columned text + margin notes -->
+        <g transform="translate(40, 30)">
+          <line x1="0" y1="0" x2="0" y2="60" stroke="#0e0e10" stroke-width="1.6"/>
+          <line x1="6" y1="6" x2="32" y2="6" stroke="#0e0e10" stroke-width="1.4"/>
+          <line x1="6" y1="14" x2="36" y2="14" stroke="#0e0e10" stroke-width="1.4"/>
+          <line x1="6" y1="22" x2="30" y2="22" stroke="#0e0e10" stroke-width="1.4"/>
+          <line x1="6" y1="30" x2="34" y2="30" stroke="#f4c542" stroke-width="3" stroke-linecap="round"/>
+          <line x1="6" y1="38" x2="32" y2="38" stroke="#0e0e10" stroke-width="1.4"/>
+          <line x1="6" y1="46" x2="28" y2="46" stroke="#0e0e10" stroke-width="1.4"/>
+          <!-- marginal scribble -->
+          <text x="42" y="34" font-family="Caveat, cursive" font-size="14" fill="#86857f" transform="rotate(-3 42 34)">∗ note</text>
+        </g>
+        <text x="116" y="78" font-family="Newsreader, serif" font-size="48" font-weight="500" fill="#0e0e10" letter-spacing="-1.2">Schol<tspan font-style="italic" font-weight="400">ia</tspan></text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>scholia.dev<br>scholia.school</div>
+      <div><b>TONE</b>old library, learned, plural-of-scholarship</div>
+      <div><b>RISK</b>Scholia.toolforge.org exists (Wikidata project, different) — distinct domain ok</div>
+    </div>
+  </div>
+
+  <!-- 05 — KENNINGS -->
+  <div class="card dark">
+    <div class="label">
+      <span class="num">05 · OLD ENGLISH</span>
+      <span class="pill">poetic · technical</span>
+    </div>
+    <div class="name">Kennings<span class="pron">/KEN·ingz/</span></div>
+    <div class="meaning"><b>n.</b> Old Norse / Old English compound metaphors — "whale-road" for sea, "battle-sweat" for blood. A way of <em>knowing</em> a thing by describing what it does.</div>
+    <div class="pos">"Every concept has a kenning. Find it."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <text x="190" y="78" font-family="Newsreader, serif" font-size="46" font-weight="500" fill="#f1efe7" letter-spacing="-1.2" text-anchor="middle">Ken<tspan font-style="italic" font-weight="400">nings</tspan></text>
+        <!-- compass-like dot above i -->
+        <circle cx="246" cy="42" r="4" fill="#f4c542"/>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>kennings.dev<br>kennings.school</div>
+      <div><b>TONE</b>poetic, slightly Tolkien, surprising for ML</div>
+      <div><b>RISK</b>"Kenning Magazine" (poetry) exists — different category, likely ok</div>
+    </div>
+  </div>
+
+  <!-- 06 — STUDIOLO -->
+  <div class="card">
+    <div class="label">
+      <span class="num">06 · ITALIAN</span>
+      <span class="pill">small-room · craft</span>
+    </div>
+    <div class="name"><em>Studiolo</em><span class="pron">/stoo·dee·OH·loh/</span></div>
+    <div class="meaning"><b>n.</b> (Italian) a small private study — a Renaissance gentleman's room for reading, drawing, and thinking. Smaller and more personal than an atelier.</div>
+    <div class="pos">"Your private study, for the things you actually want to learn."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <!-- doorway / arch mark -->
+        <g transform="translate(50, 24)">
+          <path d="M 0 60 L 0 18 Q 0 0 18 0 L 22 0 Q 40 0 40 18 L 40 60" stroke="#0e0e10" stroke-width="2.4" fill="none"/>
+          <line x1="0" y1="60" x2="40" y2="60" stroke="#0e0e10" stroke-width="2.4"/>
+          <circle cx="20" cy="24" r="3.5" fill="#f4c542"/>
+        </g>
+        <text x="110" y="76" font-family="Newsreader, serif" font-style="italic" font-size="46" font-weight="400" fill="#0e0e10" letter-spacing="-1">Studiolo</text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>studiolo.school<br>studiolo.ml</div>
+      <div><b>TONE</b>Renaissance, intimate, a room of one's own</div>
+      <div><b>RISK</b>some art-world usage — needs a strong "for ML" lockup</div>
+    </div>
+  </div>
+
+  <!-- 07 — INKWELL -->
+  <div class="card">
+    <div class="label">
+      <span class="num">07 · COMPOUND</span>
+      <span class="pill">writing · craft</span>
+    </div>
+    <div class="name">Inkwell.ml<span class="pron">/INK·wel/</span></div>
+    <div class="meaning"><b>n.</b> a small jar of ink set into a writing desk. The well you dip into. Combined with .ml as a deliberate signal — a writer's tool, for the field.</div>
+    <div class="pos">"Where ML gets written down. Properly."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <!-- inkwell + nib -->
+        <g transform="translate(40, 26)">
+          <path d="M 0 22 L 0 60 Q 0 70 10 70 L 30 70 Q 40 70 40 60 L 40 22 Z" fill="none" stroke="#0e0e10" stroke-width="2.4"/>
+          <ellipse cx="20" cy="22" rx="20" ry="4" fill="#f4c542" stroke="#0e0e10" stroke-width="2"/>
+          <!-- nib coming out -->
+          <line x1="20" y1="22" x2="32" y2="0" stroke="#0e0e10" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="22" y1="20" x2="34" y2="-2" stroke="#0e0e10" stroke-width="1.4"/>
+        </g>
+        <text x="110" y="78" font-family="Newsreader, serif" font-size="44" font-weight="500" fill="#0e0e10" letter-spacing="-1.2">Ink<tspan font-style="italic" font-weight="400">well</tspan><tspan font-family="JetBrains Mono, monospace" font-size="20" font-weight="400" fill="#86857f" letter-spacing="0">.ml</tspan></text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>inkwell.ml<br>(.com is taken)</div>
+      <div><b>TONE</b>warm, writerly, the .ml is a wink to the field</div>
+      <div><b>RISK</b>"Inkwell" is a common metaphor — leaning on .ml is required to disambiguate</div>
+    </div>
+  </div>
+
+  <!-- 08 — VARIORUM -->
+  <div class="card dark">
+    <div class="label">
+      <span class="num">08 · LATIN</span>
+      <span class="pill">scholarly edition</span>
+    </div>
+    <div class="name">Variorum<span class="pron">/var·ee·OR·əm/</span></div>
+    <div class="meaning"><b>n.</b> (Latin, "of various scholars") an edition of a text that includes the full apparatus — every variant reading, every footnote, every commentary, all in one.</div>
+    <div class="pos">"The full apparatus. Every paper, every annotation, every implementation."</div>
+    <div class="stage">
+      <svg width="380" height="120" viewBox="0 0 380 120">
+        <text x="190" y="78" font-family="Newsreader, serif" font-size="44" font-weight="500" fill="#f1efe7" letter-spacing="-1.2" text-anchor="middle">Variorum</text>
+        <!-- highlighter bar over "varior" -->
+        <line x1="98" y1="50" x2="220" y2="50" stroke="#f4c542" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+      </svg>
+    </div>
+    <div class="meta">
+      <div><b>DOMAIN</b>variorum.dev<br>variorum.school</div>
+      <div><b>TONE</b>library-stack, deeply scholarly, confident</div>
+      <div><b>RISK</b>distinctive enough to own — pronunciation needs a guide first time</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- next -->
+<div class="next">
+  <div>
+    <span class="mono">§ NEXT</span>
+    <h3>Pick one — I'll verify availability and build the full identity sheet.</h3>
+    <p>Once you pick, I'll do a proper check (registrar, USPTO, GitHub/social handles), then build construction grid, dark/inverted, in-situ across the product, and a few applications (course header, completion seal, paper deep-dive).</p>
+  </div>
+  <div class="scribble">my picks: <b>Scholia</b> if you want the most defensible scholarly name, <b>Kernfolio</b> for the typographic pun on "kernel," <b>Variorum</b> if you want to sound like a publishing house</div>
+</div>
+
+</div>
+</body>
+</html>
