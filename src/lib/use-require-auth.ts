@@ -2,13 +2,15 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { isLoggedIn } from "@/lib/auth";
+import { isLoggedIn, tryRefresh } from "@/lib/auth";
 
 export function useRequireAuth() {
   const router = useRouter();
   useEffect(() => {
-    if (!isLoggedIn()) {
-      router.replace("/sign-in");
-    }
-  }, [router]);
+    if (isLoggedIn()) return;
+    // Access token missing or expired — try refreshing before redirecting
+    tryRefresh().then((ok) => {
+      if (!ok) router.replace("/sign-in");
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 }
