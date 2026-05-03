@@ -103,45 +103,51 @@ export interface BlogPost {
 
 // ── API calls ──────────────────────────────────────────────────────────────
 
+const PLACEHOLDER_BLOGS: BlogPost[] = [
+  {
+    id: 1,
+    title: "Scaled Dot-Product Attention: A visual breakdown",
+    slug: "scaled-dot-product",
+    summary:
+      "An interactive, visual explanation of how Transformers pay attention to data, starting from basic dot products to multi-head setups.",
+    content: "",
+    tags: ["Machine Learning", "Transformers", "Visual Guide"],
+    is_published: true,
+    reading_time_minutes: 12,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+];
+
 export async function getBlogs(): Promise<BlogPost[]> {
   try {
-    return await apiFetch<BlogPost[]>("/writing/");
+    const posts = await apiFetch<BlogPost[]>("/writing/");
+    return posts.length > 0 ? posts : PLACEHOLDER_BLOGS;
   } catch {
-    return [
-      {
-        id: 1,
-        title: "Scaled Dot-Product Attention: A visual breakdown",
-        slug: "scaled-dot-product",
-        summary:
-          "An interactive, visual explanation of how Transformers pay attention to data, starting from basic dot products to multi-head setups.",
-        content: "",
-        tags: ["Machine Learning", "Transformers", "Visual Guide"],
-        is_published: true,
-        reading_time_minutes: 12,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      },
-    ];
+    return PLACEHOLDER_BLOGS;
   }
 }
 
+const RL101_SUMMARY: CourseSummary = {
+  id: 1,
+  slug: "reinforcement-learning-101",
+  title: "Reinforcement Learning 101",
+  subtitle: "From Markov decisions to policy gradients — the complete beginner's path.",
+  difficulty: "beginner",
+  tags: ["rl", "foundations", "policy-gradients"],
+  estimated_hours: 10,
+  is_published: false,
+  created_at: "2026-05-03T00:00:00Z",
+};
+
 export async function getCourses(page = 1): Promise<CourseSummary[]> {
   try {
-    return await apiFetch<CourseSummary[]>(
-      `/courses?page=${page}&page_size=30`,
-    );
+    const courses = await apiFetch<CourseSummary[]>(`/courses?page=${page}&page_size=30`);
+    // Always surface RL 101 as the pinned coming-soon entry
+    const withoutRL101 = courses.filter((c) => c.slug !== "reinforcement-learning-101");
+    return [...withoutRL101, RL101_SUMMARY];
   } catch {
-    return Object.values(PLACEHOLDER_COURSES).map((course) => ({
-      id: course.id,
-      slug: course.slug,
-      title: course.title,
-      subtitle: course.subtitle,
-      difficulty: course.difficulty,
-      tags: course.tags,
-      estimated_hours: course.estimated_hours,
-      is_published: course.is_published,
-      created_at: course.created_at,
-    }));
+    return [RL101_SUMMARY];
   }
 }
 
@@ -151,4 +157,60 @@ export async function getCourse(slug: string): Promise<CourseDetail> {
 
 export async function getLesson(slug: string): Promise<Lesson> {
   return apiFetch<Lesson>(`/courses/lessons/${slug}`);
+}
+
+// ── Marginalia ─────────────────────────────────────────────────────────────
+
+export type NoteType = "intuition" | "definition" | "note" | "question";
+
+export interface MarginaliaNote {
+  id: number;
+  article_slug: string;
+  section_id: string | null;
+  note_type: NoteType;
+  label: string | null;
+  content: string;
+  color: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+function authHeader(token: string) {
+  return { Authorization: `Bearer ${token}` };
+}
+
+export async function fetchMarginalia(articleSlug: string, token: string): Promise<MarginaliaNote[]> {
+  return apiFetch<MarginaliaNote[]>(`/marginalia/${articleSlug}`, {
+    headers: authHeader(token),
+  });
+}
+
+export async function createMarginaliaNote(
+  token: string,
+  data: { article_slug: string; section_id?: string; note_type: NoteType; label?: string; content: string; color?: string }
+): Promise<MarginaliaNote> {
+  return apiFetch<MarginaliaNote>("/marginalia", {
+    method: "POST",
+    headers: authHeader(token),
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateMarginaliaNote(
+  token: string,
+  noteId: number,
+  data: { label?: string; content?: string; note_type?: NoteType; color?: string }
+): Promise<MarginaliaNote> {
+  return apiFetch<MarginaliaNote>(`/marginalia/${noteId}`, {
+    method: "PATCH",
+    headers: authHeader(token),
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteMarginaliaNote(token: string, noteId: number): Promise<void> {
+  await apiFetch<void>(`/marginalia/${noteId}`, {
+    method: "DELETE",
+    headers: authHeader(token),
+  });
 }
