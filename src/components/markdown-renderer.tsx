@@ -26,7 +26,7 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
         components={{
           // ![caption](file.mp4) → <video> instead of broken <img>
           img({ src, alt }) {
-            if (src && VIDEO_EXTS.test(src)) {
+            if (src && typeof src === 'string' && VIDEO_EXTS.test(src)) {
               return (
                 <video src={src} title={alt} controls playsInline className={VIDEO_CLASSES} />
               );
