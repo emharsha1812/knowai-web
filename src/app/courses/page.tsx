@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { TOKENS, NavBar, Mono, useTheme } from "@/components/ui/primitives";
 import { motion } from 'framer-motion';
 import { getCourses, type CourseSummary } from '@/lib/api';
+import { useRequireAuth } from '@/lib/use-require-auth';
 
 const CARD_COLORS = ['butter', 'sage', 'sky', 'lavender', 'rose', 'mint'] as const;
 
 export default function CoursesIndex() {
+  useRequireAuth();
   const theme = useTheme();
   const t = TOKENS[theme as keyof typeof TOKENS] as any;
   const [courses, setCourses] = useState<CourseSummary[]>([]);
