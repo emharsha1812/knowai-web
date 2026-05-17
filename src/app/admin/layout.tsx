@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   FileText,
   BookOpen,
+  Video,
   LogOut,
   Menu,
   X,
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/blogs", label: "Blogs", icon: FileText },
   { href: "/admin/courses", label: "Courses", icon: BookOpen },
+  { href: "/admin/watch-notes", label: "Watch Notes", icon: Video },
 ];
 
 export default function AdminLayout({

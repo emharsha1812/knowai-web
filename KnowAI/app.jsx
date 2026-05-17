@@ -74,6 +74,15 @@ function App() {
           </DCArtboard>
         </DCSection>
 
+        <DCSection id="youtube" title="Watch-Notes" subtitle="YouTube lectures with pre-written notes — downloadable as PDF.">
+          <DCArtboard id="youtube-index" label="Watch-Notes · index" width={1280} height={1700}>
+            <YouTubeIndex theme={theme} />
+          </DCArtboard>
+          <DCArtboard id="youtube-reader" label="Reader · video + notes (3B1B / GPT)" width={1280} height={1700}>
+            <YouTubeReader theme={theme} />
+          </DCArtboard>
+        </DCSection>
+
       </DesignCanvas>
 
       {showTweaks && (

@@ -119,21 +119,6 @@ export default function Home() {
             >
               START READING →
             </Link>
-            <button
-              style={{
-                background: "transparent",
-                color: t.ink,
-                border: `1px solid ${t.ink}`,
-                padding: "13px 22px",
-                borderRadius: 2,
-                fontWeight: 600,
-                fontSize: 12,
-                letterSpacing: "0.1em",
-                cursor: "pointer",
-              }}
-            >
-              VIEW SYLLABUS
-            </button>
           </div>
 
           {/* margin handwriting note */}

@@ -265,6 +265,87 @@ export async function deleteChapter(courseSlug: string, chapterId: number): Prom
   });
 }
 
+// ── Watch Note API ────────────────────────────────────────────────────────────
+
+export interface WatchNoteSection {
+  ts: string;
+  label: string;
+  heading: string;
+  body_md: string;
+}
+
+export interface WatchNote {
+  id: number;
+  slug: string;
+  youtube_video_id: string;
+  channel: string;
+  author: string | null;
+  title: string;
+  duration: string;
+  watched_ratio: number;
+  note_count: number;
+  page_count: number;
+  tag: string;
+  color: string;
+  last_note: string | null;
+  thumb_bg: string;
+  is_published: boolean;
+  is_featured: boolean;
+  sections: WatchNoteSection[] | null;
+  pdf_url: string | null;
+  view_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WatchNoteCreate {
+  slug: string;
+  youtube_video_id: string;
+  channel: string;
+  author?: string | null;
+  title: string;
+  duration: string;
+  watched_ratio?: number;
+  note_count?: number;
+  page_count?: number;
+  tag: string;
+  color?: string;
+  last_note?: string | null;
+  thumb_bg?: string;
+  is_published?: boolean;
+  is_featured?: boolean;
+  sections?: WatchNoteSection[];
+  pdf_url?: string | null;
+}
+
+export async function getAdminWatchNotes(): Promise<WatchNote[]> {
+  return adminFetch<WatchNote[]>("/watch-notes");
+}
+
+export async function getAdminWatchNote(slug: string): Promise<WatchNote> {
+  return adminFetch<WatchNote>(`/watch-notes/${slug}`);
+}
+
+export async function createWatchNote(data: WatchNoteCreate): Promise<WatchNote> {
+  return adminFetch<WatchNote>("/watch-notes", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateWatchNote(slug: string, data: Partial<WatchNoteCreate>): Promise<WatchNote> {
+  return adminFetch<WatchNote>(`/watch-notes/${slug}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteWatchNote(slug: string): Promise<void> {
+  return adminFetch<void>(`/watch-notes/${slug}`, {
+    method: "DELETE",
+  });
+}
+
 // ── Lesson API ────────────────────────────────────────────────────────────────
 
 export async function createLesson(chapterId: number, data: LessonCreate): Promise<Lesson> {

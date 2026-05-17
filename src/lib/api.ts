@@ -214,3 +214,48 @@ export async function deleteMarginaliaNote(token: string, noteId: number): Promi
     headers: authHeader(token),
   });
 }
+
+// ── Watch Notes ────────────────────────────────────────────────────────────
+
+export interface WatchNoteSection {
+  ts: string;
+  label: string;
+  heading: string;
+  body_md: string;
+}
+
+export interface WatchNoteSummary {
+  id: number;
+  slug: string;
+  youtube_video_id: string;
+  channel: string;
+  author: string | null;
+  title: string;
+  duration: string;
+  watched_ratio: number;
+  note_count: number;
+  page_count: number;
+  tag: string;
+  color: string;
+  last_note: string | null;
+  thumb_bg: string;
+  is_featured: boolean;
+  is_published: boolean;
+  created_at: string;
+}
+
+export interface WatchNoteDetail extends WatchNoteSummary {
+  sections: WatchNoteSection[] | null;
+  pdf_url: string | null;
+  view_count: number;
+  updated_at: string;
+}
+
+export async function getWatchNotes(tag?: string): Promise<WatchNoteSummary[]> {
+  const url = tag ? `/watch-notes?tag=${encodeURIComponent(tag)}` : "/watch-notes";
+  return apiFetch<WatchNoteSummary[]>(url);
+}
+
+export async function getWatchNote(slug: string): Promise<WatchNoteDetail> {
+  return apiFetch<WatchNoteDetail>(`/watch-notes/${slug}`);
+}

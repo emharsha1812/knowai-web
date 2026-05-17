@@ -31,9 +31,6 @@ export function Hero() {
           <Button className="rounded-none bg-foreground text-background hover:bg-foreground/90 text-sm uppercase tracking-wider px-8 py-6">
             Start Reading
           </Button>
-          <Button variant="outline" className="rounded-none border-foreground hover:bg-muted text-sm uppercase tracking-wider px-8 py-6">
-            View Syllabus
-          </Button>
         </div>
       </div>
     </section>

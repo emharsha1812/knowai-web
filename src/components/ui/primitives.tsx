@@ -155,6 +155,9 @@ export function NavBar({ theme = 'light', active = '' }: any) {
     { id: 'courses', label: 'Courses', href: '/courses', icon: (
       <Image src="/concepts.png" width={36} height={36} alt="Courses" style={{ objectFit: 'contain' }} />
     )},
+    { id: 'watch-notes', label: 'Watch', href: '/watch-notes', icon: (
+      <Image src="/playlist.png" width={36} height={36} alt="Watch" style={{ objectFit: 'contain' }} />
+    )},
   ];
 
   const comingSoonItems = [
