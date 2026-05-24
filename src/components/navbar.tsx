@@ -54,12 +54,13 @@ export function Navbar() {
             className="font-heading text-2xl font-semibold tracking-tight flex items-center gap-2 shrink-0"
           >
             <span style={{ fontFamily: 'var(--font-lora), Newsreader, serif', fontWeight: 500, letterSpacing: '-0.015em', display: 'inline-flex', alignItems: 'baseline' }}>
-              <span>Verid</span>
+              <span style={{ color: '#f4c542' }}>Al</span>
+              <span>cu</span>
               <span style={{ position: 'relative', display: 'inline-block' }}>
                 ı
-                <span style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '-0.1em', width: '0.18em', height: '0.18em', borderRadius: '50%', background: '#f4c542', display: 'block', pointerEvents: 'none' }} />
+                <span style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '0.1em', width: '0.18em', height: '0.18em', borderRadius: '50%', background: '#f4c542', display: 'block', pointerEvents: 'none' }} />
               </span>
-              <span>c</span>
+              <span>n</span>
             </span>
           </Link>
 

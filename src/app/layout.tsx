@@ -28,7 +28,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Veridic",
+  title: "Alcuin",
   description: "AI/ML, understood from within.",
 };
 

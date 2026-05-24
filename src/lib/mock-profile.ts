@@ -2,7 +2,7 @@ export const MOCK_USER = {
   name: "Harshwardhan Fartale",
   username: "harshwardhan",
   avatar_initials: "HF",
-  bio: "Building Veridic. Interested in RL, diffusion, and GPU programming.",
+  bio: "Building Alcuin. Interested in RL, diffusion, and GPU programming.",
   joined: "January 2026",
   provider: "github" as const,
 };

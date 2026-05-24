@@ -210,7 +210,7 @@ export default function Blog() {
 
   const toggleTheme = () => {
     const isDark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("veridic-theme", isDark ? "dark" : "light");
+    localStorage.setItem("alcuin-theme", isDark ? "dark" : "light");
   };
 
   // ── Derived ────────────────────────────────────────────────────────────────

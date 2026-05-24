@@ -77,8 +77,8 @@ export function Highlight({ children, strike = false, color, theme = 'light' }: 
 
 export function Logo({ theme = 'light', size = 18 }: any) {
   const t = TOKENS[theme as keyof typeof TOKENS] as any;
-  // Veridic logo: same margin-notation SVG mark, wordmark = "Verid" + dotless-ı + "c"
-  // The second i uses U+0131 (ı = LATIN SMALL LETTER DOTLESS I) — no natural tittle —
+  // Alcuin logo: margin-notation SVG mark + wordmark = "Al" (yellow) + "cu" + dotless-ı + "n"
+  // The i uses U+0131 (ı = LATIN SMALL LETTER DOTLESS I) — no natural tittle —
   // so the yellow circle IS the dot, not an extra element.
   const scale = size / 18;
   const svgW = 76 * scale;
@@ -115,9 +115,10 @@ export function Logo({ theme = 'light', size = 18 }: any) {
           style={{ userSelect: 'none' }}
         >∗ note</text>
       </svg>
-      {/* Wordmark: "Verid" + dotless-ı (U+0131) with yellow tittle + "c" */}
+      {/* Wordmark: "Al" (yellow) + "cu" + dotless-ı (U+0131) with yellow tittle + "n" */}
       <span style={{ fontFamily: 'Newsreader, serif', fontWeight: 500, fontSize: size, letterSpacing: '-0.015em', lineHeight: 1, display: 'inline-flex', alignItems: 'baseline' }}>
-        <span>Verid</span>
+        <span style={{ color: t.accent }}>Al</span>
+        <span>cu</span>
         {/* dotless i — the yellow circle is the ONLY dot, replacing the natural tittle */}
         <span style={{ position: 'relative', display: 'inline-block' }}>
           ı{/* U+0131 LATIN SMALL LETTER DOTLESS I */}
@@ -125,7 +126,7 @@ export function Logo({ theme = 'light', size = 18 }: any) {
             position: 'absolute',
             left: '50%',
             transform: 'translateX(-50%)',
-            top: -(dotSize + size * 0.02),
+            top: size * 0.1,
             width: dotSize,
             height: dotSize,
             borderRadius: '50%',
@@ -134,7 +135,7 @@ export function Logo({ theme = 'light', size = 18 }: any) {
             pointerEvents: 'none',
           }} />
         </span>
-        <span>c</span>
+        <span>n</span>
       </span>
     </Link>
   );
@@ -145,7 +146,7 @@ export function NavBar({ theme = 'light', active = '' }: any) {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    setIsSignedIn(localStorage.getItem('veridic-auth') === 'true');
+    setIsSignedIn(localStorage.getItem('alcuin-auth') === 'true');
   }, []);
 
   const activeItems = [
@@ -233,7 +234,7 @@ export function NavBar({ theme = 'light', active = '' }: any) {
           <>
             <Link href="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>Dashboard</Link>
             <button onClick={() => {
-              localStorage.setItem('veridic-auth', 'false');
+              localStorage.setItem('alcuin-auth', 'false');
               setIsSignedIn(false);
               window.location.href = '/';
             }} style={{
@@ -244,7 +245,7 @@ export function NavBar({ theme = 'light', active = '' }: any) {
         ) : (
           <>
             <span onClick={() => {
-              localStorage.setItem('veridic-auth', 'true');
+              localStorage.setItem('alcuin-auth', 'true');
               setIsSignedIn(true);
             }} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>Sign in</span>
             <Link href="/profile" style={{
@@ -261,10 +262,10 @@ export function NavBar({ theme = 'light', active = '' }: any) {
             const isDark = document.documentElement.classList.contains('dark');
             if (isDark) {
               document.documentElement.classList.remove('dark');
-              localStorage.setItem('veridic-theme', 'light');
+              localStorage.setItem('alcuin-theme', 'light');
             } else {
               document.documentElement.classList.add('dark');
-              localStorage.setItem('veridic-theme', 'dark');
+              localStorage.setItem('alcuin-theme', 'dark');
             }
           }}
         >

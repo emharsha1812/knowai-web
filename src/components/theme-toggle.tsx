@@ -16,10 +16,10 @@ export function ThemeToggle() {
     setIsDark(next);
     if (next) {
       document.documentElement.classList.add("dark");
-      localStorage.setItem("veridic-theme", "dark");
+      localStorage.setItem("alcuin-theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.setItem("veridic-theme", "light");
+      localStorage.setItem("alcuin-theme", "light");
     }
   }
 

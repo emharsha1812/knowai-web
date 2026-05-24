@@ -319,7 +319,7 @@ export default function ProblemsIndex() {
                       fontStyle: "italic",
                     }}
                   >
-                    Veridic 150
+                    Alcuin 150
                   </span>
                 </div>
                 <div

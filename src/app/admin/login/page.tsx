@@ -6,7 +6,7 @@ import { login, setToken } from "@/lib/admin-api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Shield, Loader2 } from "lucide-react";
-import { VeridicWordmark } from "@/components/admin/veridic-wordmark";
+import { AlcuinWordmark } from "@/components/admin/alcuin-wordmark";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -41,13 +41,13 @@ export default function AdminLoginPage() {
         {/* Header */}
         <div className="mb-8 text-center flex flex-col items-center">
           <div className="mb-4">
-            <VeridicWordmark className="text-4xl" />
+            <AlcuinWordmark className="text-4xl" />
           </div>
           <h1 className="font-heading text-xl font-semibold tracking-tight mt-2">
             Admin Login
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sign in to the Veridic dashboard
+            Sign in to the Alcuin dashboard
           </p>
         </div>
 

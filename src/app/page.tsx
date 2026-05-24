@@ -89,7 +89,7 @@ export default function Home() {
               fontWeight: 300,
             }}
           >
-            Deep writing technical posts for serious learners.
+            Deep technical content for serious learners, not posts.
           </p>
 
           <div

@@ -29,8 +29,8 @@ export default function BlogIndexClient({ initialPosts }: Props) {
   const [readPosts, setReadPosts] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    setIsSignedIn(localStorage.getItem("veridic-auth") === "true");
-    const storedReads = localStorage.getItem("veridic-read-posts");
+    setIsSignedIn(localStorage.getItem("alcuin-auth") === "true");
+    const storedReads = localStorage.getItem("alcuin-read-posts");
     if (storedReads) {
       try { setReadPosts(JSON.parse(storedReads)); } catch {}
     }
@@ -40,7 +40,7 @@ export default function BlogIndexClient({ initialPosts }: Props) {
     e.preventDefault();
     const next = { ...readPosts, [slug]: !readPosts[slug] };
     setReadPosts(next);
-    localStorage.setItem("veridic-read-posts", JSON.stringify(next));
+    localStorage.setItem("alcuin-read-posts", JSON.stringify(next));
   };
 
   const published = initialPosts.filter((p) => p.is_published);
@@ -55,7 +55,7 @@ export default function BlogIndexClient({ initialPosts }: Props) {
           <div style={{ maxWidth: 800 }}>
             <Mono theme={theme}>§ WRITING & ESSAYS</Mono>
             <h1 style={{ fontFamily: "Newsreader, serif", fontSize: 64, fontWeight: 400, margin: "24px 0 16px", lineHeight: 1.0, letterSpacing: "-0.025em" }}>
-              Notes on building<br /><em>intelligence.</em>
+              Deep technical writing<br />for serious learners,<br /><em>not posts.</em>
             </h1>
             <p style={{ fontFamily: "Newsreader, serif", fontSize: 20, color: t.inkSoft, lineHeight: 1.5 }}>
               Derivations, intuitions, and long-form thoughts on machine learning architectures.

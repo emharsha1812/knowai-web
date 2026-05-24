@@ -16,7 +16,7 @@ import {
 import { getMe, getToken, clearToken, type User } from "@/lib/admin-api";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { VeridicWordmark } from "@/components/admin/veridic-wordmark";
+import { AlcuinWordmark } from "@/components/admin/alcuin-wordmark";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -133,7 +133,7 @@ export default function AdminLayout({
             className="flex items-center gap-2"
           >
             <Shield className="h-4 w-4 text-muted-foreground" />
-            <VeridicWordmark className="text-xl" />
+            <AlcuinWordmark className="text-xl" />
           </Link>
           <Button
             variant="ghost"
@@ -201,7 +201,7 @@ export default function AdminLayout({
             <Menu className="h-5 w-5" />
           </Button>
           <span className="ml-2">
-            <VeridicWordmark className="text-xl" />
+            <AlcuinWordmark className="text-xl" />
           </span>
         </header>
 
