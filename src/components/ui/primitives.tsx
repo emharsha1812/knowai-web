@@ -228,22 +228,7 @@ export function NavBar({ theme = 'light', active = '' }: any) {
           ))}
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 18, color: t.inkSoft }}>
-        <span 
-          style={{ fontSize: 14, cursor: 'pointer' }}
-          onClick={() => {
-            const isDark = document.documentElement.classList.contains('dark');
-            if (isDark) {
-              document.documentElement.classList.remove('dark');
-              localStorage.setItem('veridic-theme', 'light');
-            } else {
-              document.documentElement.classList.add('dark');
-              localStorage.setItem('veridic-theme', 'dark');
-            }
-          }}
-        >
-          {theme === 'dark' ? '☾' : '☼'}
-        </span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 18, color: t.inkSoft, borderLeft: `1px solid ${t.rule}`, paddingLeft: 20 }}>
         {isSignedIn ? (
           <>
             <Link href="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>Dashboard</Link>
@@ -269,6 +254,22 @@ export function NavBar({ theme = 'light', active = '' }: any) {
             }}>EARLY ACCESS</Link>
           </>
         )}
+        <div style={{ width: 1, height: 16, background: t.rule, marginLeft: 4 }} />
+        <span
+          style={{ fontSize: 14, cursor: 'pointer', color: t.inkMuted }}
+          onClick={() => {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('veridic-theme', 'light');
+            } else {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('veridic-theme', 'dark');
+            }
+          }}
+        >
+          {theme === 'dark' ? '☾' : '☼'}
+        </span>
       </div>
     </div>
   );

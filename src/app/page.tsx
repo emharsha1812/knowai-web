@@ -206,40 +206,35 @@ export default function Home() {
           </div>
         )}
 
-        {/* FEATURED CHAPTERS GRID — hidden until launch */}
-        {false && (
-          <div style={{ padding: "64px 0 40px" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "baseline",
-                marginBottom: 24,
-                padding: "0 80px",
-              }}
-            >
-              <div>
-                <Mono theme={theme}>§ FEATURED · 2024</Mono>
-                <h2
-                  style={{
-                    fontFamily: "Newsreader, serif",
-                    fontSize: 32,
-                    fontWeight: 500,
-                    margin: "8px 0 0",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  Chapters in the wild
-                </h2>
-              </div>
-              <span style={{ color: t.inkSoft, fontSize: 13 }}>
-                view all 142 →
-              </span>
+        {/* FEATURED CHAPTERS GRID */}
+        <div style={{ padding: "64px 0 40px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              marginBottom: 24,
+              padding: "0 80px",
+            }}
+          >
+            <div>
+              <Mono theme={theme}>§ COURSES</Mono>
+              <h2
+                style={{
+                  fontFamily: "Newsreader, serif",
+                  fontSize: 32,
+                  fontWeight: 500,
+                  margin: "8px 0 0",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Courses
+              </h2>
             </div>
-
-            <CategoryCards />
           </div>
-        )}
+
+          <CategoryCards />
+        </div>
 
         {/* THE LOOP — hidden until launch */}
         {false && (

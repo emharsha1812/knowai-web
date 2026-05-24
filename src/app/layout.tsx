@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Plus_Jakarta_Sans, Lora, JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 
@@ -31,15 +32,6 @@ export const metadata: Metadata = {
   description: "AI/ML, understood from within.",
 };
 
-// Inline script injected before body renders — prevents dark mode flash
-const themeScript = `(function(){
-  try {
-    var t = localStorage.getItem('veridic-theme');
-    if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
-  } catch(e) {}
-})();`;
 
 export default function RootLayout({
   children,
@@ -52,11 +44,8 @@ export default function RootLayout({
       className={`${jakarta.variable} ${lora.variable} ${jetbrainsMono.variable} ${caveat.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      {/* Theme init script must run before body paints to avoid flash */}
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-sans text-foreground bg-background">
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         {children}
       </body>
     </html>

@@ -83,12 +83,12 @@ export default function CoursesIndex() {
                       fontFamily: 'Newsreader, serif', fontSize: 18, fontStyle: 'italic', fontWeight: 600,
                     }}>{id}</span>
                     <h2 style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', color: t.inkMuted, textTransform: 'uppercase', margin: 0 }}>
-                      {course.title}
+                      {course.subtitle ?? ''}
                     </h2>
                   </div>
 
-                  <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 42, fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, letterSpacing: '-0.02em', fontStyle: 'italic', color: t.ink }}>
-                    {course.subtitle ?? course.title}
+                  <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 32, fontWeight: 400, margin: '0 0 16px', lineHeight: 1.15, letterSpacing: '-0.02em', fontStyle: 'italic', color: t.ink }}>
+                    {course.title}
                   </h3>
 
                   {course.tags && course.tags.length > 0 && (

@@ -54,7 +54,7 @@ export default async function LessonPage({ params }: Props) {
 
         {/* Lesson content */}
         <div className="flex-1 min-w-0">
-          <div className="max-w-2xl mx-auto px-6 xl:px-10 py-12">
+          <div className="max-w-4xl mx-auto px-6 xl:px-12 py-12">
 
             {/* Breadcrumb */}
             <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">
