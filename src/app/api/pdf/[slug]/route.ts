@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { chromium } from 'playwright';
+import { chromium } from 'playwright-core';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -14,12 +14,25 @@ export async function GET(
 
   let browser;
   try {
-    browser = await chromium.launch({ headless: true });
+    let executablePath: string | undefined;
+    let launchArgs: string[] = [];
+
+    if (process.env.VERCEL) {
+      // On Vercel: download a serverless Chromium binary to /tmp at runtime
+      const sparticuz = await import('@sparticuz/chromium');
+      executablePath = await sparticuz.default.executablePath();
+      launchArgs = sparticuz.default.args;
+    }
+    // Locally: playwright-core finds the browser installed by the `playwright` dev dependency
+
+    browser = await chromium.launch({
+      args: launchArgs,
+      executablePath,
+      headless: true,
+    });
+
     const page = await browser.newPage();
-
     await page.goto(printUrl, { waitUntil: 'networkidle', timeout: 30000 });
-
-    // Give KaTeX an extra moment to finish rendering math
     await page.waitForTimeout(500);
 
     const pdf = await page.pdf({
@@ -28,7 +41,7 @@ export async function GET(
       margin: { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
     });
 
-    return new NextResponse(pdf, {
+    return new NextResponse(new Uint8Array(pdf), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="watch-notes-${slug}.pdf"`,
@@ -37,7 +50,7 @@ export async function GET(
   } catch (error) {
     console.error('[PDF] generation failed:', error);
     return NextResponse.json(
-      { error: 'PDF generation failed. Make sure the dev server is running.' },
+      { error: 'PDF generation failed.' },
       { status: 500 }
     );
   } finally {
