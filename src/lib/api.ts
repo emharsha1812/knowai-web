@@ -1,7 +1,7 @@
 import { PLACEHOLDER_COURSES } from "@/lib/placeholder-courses";
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+  process.env.NEXT_PUBLIC_API_URL ?? "https://knowai-backend-production.up.railway.app/api/v1";
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   let res: Response;
