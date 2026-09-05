@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { TOKENS, NavBar, Mono, Highlight, Tag, useTheme } from '@/components/ui/primitives';
 import { getWatchNotes, type WatchNoteSummary } from '@/lib/api';
-import { useRequireAuth } from '@/lib/use-require-auth';
 
 const ALL_TAGS = ['All', 'Transformers', 'Fundamentals', 'Generative', 'RL', 'Systems', 'Vision', 'Interp', 'Architectures'];
 
@@ -84,7 +83,6 @@ function ThumbnailSVG({ tag }: { tag: string }) {
 }
 
 export default function WatchNotesIndex() {
-  useRequireAuth();
   const theme = useTheme();
   const t = TOKENS[theme as keyof typeof TOKENS] as any;
   const [videos, setVideos] = useState<WatchNoteSummary[]>([]);

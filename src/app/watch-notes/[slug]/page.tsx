@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { TOKENS, NavBar, Mono, Tag, useTheme } from '@/components/ui/primitives';
 import { getWatchNote, type WatchNoteDetail, type WatchNoteSection } from '@/lib/api';
-import { useRequireAuth } from '@/lib/use-require-auth';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
@@ -61,7 +60,6 @@ function NoteSection({ section, index, isActive, theme }: {
 }
 
 export default function WatchNoteReader() {
-  useRequireAuth();
   const { slug } = useParams<{ slug: string }>();
   const theme = useTheme();
   const t = TOKENS[theme as keyof typeof TOKENS] as any;

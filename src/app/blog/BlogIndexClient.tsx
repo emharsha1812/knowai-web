@@ -5,7 +5,6 @@ import Link from "next/link";
 import { TOKENS, NavBar, Mono, useTheme } from "@/components/ui/primitives";
 import { motion, AnimatePresence } from "framer-motion";
 import { type BlogPost } from "@/lib/api";
-import { useRequireAuth } from "@/lib/use-require-auth";
 
 const CARD_COLORS = ["lavender", "butter", "rose", "sky", "sage", "mint"] as const;
 
@@ -20,7 +19,6 @@ interface Props {
 }
 
 export default function BlogIndexClient({ initialPosts }: Props) {
-  useRequireAuth();
   const theme = useTheme();
   const t = TOKENS[theme as keyof typeof TOKENS] as any;
 
